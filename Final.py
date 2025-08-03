@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+import json
 
 # Title
 st.title("Spare Parts Sales Prediction Dashboard")
@@ -33,6 +34,8 @@ if uploaded_file:
     st.write(f"**Duplicates:** {duplicates}")
     st.write("**Cleaned Data Info:**")
     st.write(df.info())
+    df.to_csv('cleaned_spare_parts_sales.csv', index=False)
+    st.download_button("Download cleaned data", data=open('cleaned_spare_parts_sales.csv', 'rb'), file_name='cleaned_spare_parts_sales.csv')
 
     # Step 3: Analyze seasonal trends
     st.header("3. Seasonal Trends Analysis")
@@ -65,7 +68,7 @@ if uploaded_file:
                 },
                 "options": {
                     "plugins": {
-                        "title": {"display": True, "text": "PartName Distribution"},
+                        "title": {"display": true, "text": "PartName Distribution"},
                         "legend": {"position": "right"}
                     }
                 }
@@ -87,10 +90,10 @@ if uploaded_file:
                 },
                 "options": {
                     "scales": {
-                        "y": {"beginAtZero": True, "title": {"display": True, "text": "Count"}},
-                        "x": {"title": {"display": True, "text": "UnitsSold (Normalized)"}}
+                        "y": {"beginAtZero": true, "title": {"display": true, "text": "Count"}},
+                        "x": {"title": {"display": true, "text": "UnitsSold (Normalized)"}}
                     },
-                    "plugins": {"title": {"display": True, "text": "UnitsSold Distribution"}}
+                    "plugins": {"title": {"display": true, "text": "UnitsSold Distribution"}}
                 }
             }
         },
@@ -110,10 +113,10 @@ if uploaded_file:
                 },
                 "options": {
                     "scales": {
-                        "y": {"beginAtZero": True, "title": {"display": True, "text": "Average UnitsSold"}},
-                        "x": {"title": {"display": True, "text": "Region"}}
+                        "y": {"beginAtZero": true, "title": {"display": true, "text": "Average UnitsSold"}},
+                        "x": {"title": {"display": true, "text": "Region"}}
                     },
-                    "plugins": {"title": {"display": True, "text": "Average UnitsSold by Region"}}
+                    "plugins": {"title": {"display": true, "text": "Average UnitsSold by Region"}}
                 }
             }
         },
@@ -128,15 +131,15 @@ if uploaded_file:
                         "data": [0.46, 0.43, 0.45, 0.47, 0.46, 0.48, 0.47, 0.46, 0.47, 0.46, 0.50, 0.45],
                         "backgroundColor": "#4BC0C0",
                         "borderColor": "#4BC0C0",
-                        "fill": False
+                        "fill": false
                     }]
                 },
                 "options": {
                     "scales": {
-                        "y": {"beginAtZero": True, "title": {"display": True, "text": "Average UnitsSold"}},
-                        "x": {"title": {"display": True, "text": "Month"}}
+                        "y": {"beginAtZero": true, "title": {"display": true, "text": "Average UnitsSold"}},
+                        "x": {"title": {"display": true, "text": "Month"}}
                     },
-                    "plugins": {"title": {"display": True, "text": "UnitsSold by Month"}}
+                    "plugins": {"title": {"display": true, "text": "UnitsSold by Month"}}
                 }
             }
         },
@@ -158,10 +161,10 @@ if uploaded_file:
                 },
                 "options": {
                     "scales": {
-                        "x": {"title": {"display": True, "text": "Temperature (Normalized)"}},
-                        "y": {"title": {"display": True, "text": "UnitsSold (Normalized)"}, "beginAtZero": True}
+                        "x": {"title": {"display": true, "text": "Temperature (Normalized)"}},
+                        "y": {"title": {"display": true, "text": "UnitsSold (Normalized)"}, "beginAtZero": true}
                     },
-                    "plugins": {"title": {"display": True, "text": "UnitsSold vs Temperature"}}
+                    "plugins": {"title": {"display": true, "text": "UnitsSold vs Temperature"}}
                 }
             }
         }
@@ -212,6 +215,5 @@ if uploaded_file:
     })
     prediction = model.predict(input_data)[0]
     st.write(f"**Predicted UnitsSold (Normalized):** {prediction:.4f}")
-
 else:
     st.warning("Please upload 'spare_parts_sales_with_issues.csv' to proceed.")
